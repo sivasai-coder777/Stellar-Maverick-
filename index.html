@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Maverick | Premium Interplanetary Terminal</title>
+    <style>
+        :root {
+            --bg-space: #030712;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --accent-blue: #38bdf8;
+            --accent-pink: #f43f5e;
+            --accent-green: #10b981;
+            --text-main: #f3f4f6;
+            --text-muted: #94a3b8;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-space);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 80%),
+                radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 40px);
+            background-size: 100% 100%, 150px 150px;
+        }
+        header {
+            background: linear-gradient(180deg, #0f172a 0%, var(--bg-space) 100%);
+            text-align: center;
+            padding: 30px 15px;
+            border-bottom: 2px dashed var(--accent-blue);
+        }
+        h1 {
+            margin: 10px 0 0 0;
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            text-shadow: 0 0 15px var(--accent-blue), 0 0 30px rgba(56,189,248,0.3);
+            letter-spacing: 1.5px;
+        }
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .main-frame {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            position: relative;
+            border-top: 3px solid var(--accent-blue);
+        }
+        .panel::before {
+            content: '▲ DATA_LINK_READY';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.6rem;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+        h2 {
+            color: var(--accent-pink);
+            font-size: 1.15rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
+        }
+        .node-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .control-btn {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: var(--text-muted);
+            padding: 12px 5px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .control-btn.active {
+            border-color: var(--accent-blue);
+            color: #fff;
+            background: rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+        #simulation-screen {
+            background: #020617;
+            border: 1px solid #1e293b;
+            min-height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            border-left: 4px solid var(--accent-green);
+            text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+        .story-box {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #1e293b;
+            line-height: 1.6;
+            border-left: 4px solid var(--accent-blue);
+        }
+        #display-title {
+            color: var(--accent-blue);
+            margin-top: 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #1e293b;
+            padding-bottom: 6px;
+        }
+        #display-desc {
+            color: var(--text-main);
+            font-size: 0.88rem;
+            margin: 0;
+            white-space: pre-line;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="badge">NASA Space Apps Educational Platform</span>
+        <h1>THE SILENT PIONEERS</h1>
+        <p style="color: var(--text-muted); margin: 8px 0 0 0; font-size: 0.75rem;">Mapping Legacy Hardware & Breakthrough Science Across Our Solar System</p>
+    </header>
+    <div class="main-frame">
+        <div class="panel">
+            <h2>🛸 Select Interstellar Asset Node</h2>
+            <div class="node-container">
+                <button class="control-btn" id="btn-ds1" onclick="loadAsset('ds1')">Deep Space 1</button>
+                <button class="control-btn" id="btn-oppy" onclick="loadAsset('oppy')">Opportunity</button>
+                <button class="control-btn" id="btn-apollo" onclick="loadAsset('apollo')">Apollo 11</button>
+            </div>
+            <div id="simulation-screen">> DATA LINK READY. CHOOSE A HARDWARE NODE ABOVE TO CONNECT DIARY LOGS.</div>
+            
+            <div class="story-box">
+                <h3 id="display-title">NASA Challenge: Abandoned But Not Forgotten</h3>
+                <p id="display-desc">Since the 1960s, NASA has left hardware across the solar system—on the Moon, on Mars, and in deep space. From rovers and instruments that completed their science missions to probes still traveling away from Earth, this hardware varies widely in both its purpose and current level of functionality.
+
+                This interactive platform introduces school-age space enthusiasts to these incredible engineering feats, uncovering the structural anatomy of the hardware configurations and the revolutionary scientific space discoveries they made possible.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">STELLAR MAVERICK // NASA SPACE APPS SUBMISSION 2026</div>
+    <script>
+        const assets = {
+            ds1: {
+                title: "Chapter 1: Deep Space 1 (Heliocentric Orbit)",
+                desc: "■ INTRODUCING THE HARDWARE:\nLaunched by NASA in 1998, Deep Space 1 (DS1) was an experimental probe designed to test advanced technologies in deep space. It featured a revolutionary NSTAR solar-electric ion engine that ionized xenon gas to move, a microscopic camera/imaging spectrometer sensor array (MICAS), and an autonomous navigation brain (Autonav) that mapped stars without help from Earth.\n\n■ SCIENCE MADE POSSIBLE:\n- Proved that highly efficient electric ion drives are viable for traveling millions of miles into deep space.\n- Executed ultra-close flybys to scan Asteroid Braille and Comet Borrelly.\n- Revealed that comet nuclei are dark, dry terrains rich in complex organic molecules.\n\n■ FUNCTIONAL LEVEL STATUS:\n- Non-Functional / Still Traveling. Its engines depleted fuel in late 2001. The hardware remains fully intact, cruising silently as an abandoned probe around our Sun forever.",
+                sim: "📡 SYSTEM RESPONSE: Deep Space 1 Node Synchronized. Tracking heliocentric travel path."
+            },
+            oppy: {
+                title: "Chapter 2: Opportunity Rover (Mars Surface)",
+                desc: "■ INTRODUCING THE HARDWARE:\nDeployed to the Martian surface in 2003, the Opportunity Rover (MER-B) was built to track geological clues of past water. It carried high-resolution Panoramic Stereo Cameras (Pancam) on an elevated mast, a flexible robotic arm loaded with composition spectrometers, a Rock Abrasion Tool (RAT) to grind stones, and solar panel arrays to recharge its internal electronic core.\n\n■ SCIENCE MADE POSSIBLE:\n- Discovered mineral hematite 'blueberries,' proving liquid, life-sustaining water once flowed on ancient Mars.\n- Operated for 15 historic years instead of its 90-day target, driving a record-breaking 28.06 miles across another planet.\n\n■ FUNCTIONAL LEVEL STATUS:\n- Inactive Monument. In June 2018, a global Martian dust storm blacked out the sky and drained its batteries. Its legendary final log home was: 'My battery is low and it's getting dark.' It rests permanently at Perseverance Valley.",
+                sim: "📍 SYSTEM RESPONSE: Mars Rover Opportunity Log Secured. Mapping Perseverance Valley coordinates."
+            },
+            apollo: {
+                title: "Chapter 3: Apollo 11 Descent Stage (The Moon)",
+desc: "■ INTRODUCING THE
+HARDWARE:\nThe historic 1969 lunar landing
+platform that safely carried human boots to
+the Moon for the first time. It was engineered
+with a heavy throttleable rocket propulsion
+engine, sturdy quad shock-absorbing landing
+gear struts wrapped in gold thermal foil, and
+the EASEP lunar science kit which contained
+laser retroreflectors and seismic
+sensors.\n\n■ SCIENCE MADE POSSIBLE:\n-
+Served as the critical base camp
+infrastructure for the first lunar sample
+collection (47.5 pounds of pristine moon
+rocks).\n- Proved that humanity can engineer
+protective landing structures capable of
+shielding scientific gear in a harsh cosmic
+vacuum.\n\n■ FUNCTIONAL LEVEL
+STATUS:\n- Static Historical Landmark. While
+the astronauts launched back home in the
+upper stage, this lower landing platform
+remains completely untouched at Tranquility
+Base, holding a permanent plaque reading:
+'We came in peace for all mankind.",
+sim: "🌕 SYSTEM RESPONSE: Apollo 11
+Outpost Anchored. Scanning Tranquility Base
+grid profiles."
+}
+};
+let typeTimer;
+function typeWriter(text, i) {
+if (i < text.length) {
+document.getElementById('display-
+desc').innerHTML = text.substring(0, i+1);
+typeTimer = setTimeout(function() {
+typeWriter(text, i+1); }, 4);
+}
+}
+function loadAsset(key) {
+clearTimeout(typeTimer);
+document.getElementById('display-
+title').innerText = assets[key].title;
+document.getElementById('simulation-
+screen').innerHTML = assets[key].sim;
+document.querySelectorAll('.control-
+btn').forEach(btn =>
+btn.classList.remove('active'));
+document.getElementById('btn-' +
+key).classList.add('active');
+typeWriter(assets[key].desc, 0);
+}
